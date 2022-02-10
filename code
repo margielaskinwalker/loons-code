@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include<iostream>
+
 using namespace std;
 
 //discussion questions for students:
@@ -14,147 +15,311 @@ using namespace std;
 
 //create a struct: structs are like classes, but no functions (just variables)
 struct point {
-    int x;
-    int y;
+	int x;
+	int y;
 };
 
 class loon {
 private:
-    int xpos;
-    int ypos;
-    int currPath;
+	int xpos;
+	int ypos;
+	int currPath;
+	int ticker;
+	sf::CircleShape loonCircle;
+	vector<point>myPath;
 public:
-    
-    loon(int x, int y);
-    void move(vector<point>myPath);
-    void draw(sf::RenderWindow& window);
+	loon(int x, int y, vector<point>Path);
+	~loon();
+	bool atPathEnd2();
+	void move2();
+	void draw2(sf::RenderWindow& window);
+	void print2() { cout << currPath << " " << myPath.size() << endl; }
 };
 
-int main()
-{
-    //set up path points using the struct we made
-    struct point p1;
-    p1.x = 100;
-    p1.y = 400;
-    struct point p2;
-    p2.x = 200;
-    p2.y = 200;
-    struct point p3;
-    p3.x = 800;
-    p3.y = 400;
-    struct point p4;
-    p4.x = 200;
-    p4.y = 200;
-    struct point p5;
-    p5.x = -50;
-    p5.y = -50;
+class bloon {
+private:
+	int xpos;
+	int ypos;
+	int currPath;
+	int ticker;
+	sf::CircleShape bloonCircle;
+	vector<point>myPath;
+public:
+	bloon(int x, int y, vector<point>Path);
+	~bloon();
+	bool atPathEnd();
+	void move();
+	void draw(sf::RenderWindow& window);
+	void print() { cout << currPath << " " << myPath.size() << endl; }
+};
 
-    //set up vector to hold path points, push path points into it
-    vector <point> pathPoints;
-    pathPoints.push_back(p1);
-    pathPoints.push_back(p2);
-    pathPoints.push_back(p3);
-    pathPoints.push_back(p4);
-    pathPoints.push_back(p5);
-
-    // create game window
-    sf::RenderWindow window(sf::VideoMode(800, 800), "bloons");
-
-    //balloon variables
-   
-    //sf::CircleShape bloon(25);
-    //bloon.setFillColor(sf::Color(250, 0, 0));
-    //bloon.setPosition(xpos, ypos)
-    int currPath = 0; //begin heading towards the first point in the pathing vector
-    int ticker = 0;
-
-    loon b1(-50, 400);
-    loon b2(-50, 500);
-
-    // GAME LOOP----------------------------------------------------------------------------------------
-    while (window.isOpen())
-    {
-        // check all the window's events that were triggered since the last iteration of the loop
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-
-
-        //pathing algorithm*******************************************************************
-        //this works by moving the x and y coord of our baloon towards the (x,y) of the next point in the path
-        //the path is stored as a series of points in a vector called "pathPoints"
-
-        ticker++; //slow dem bloons down
-        if (ticker % 30== 0) { //make 30 bigger to slow down baloon more
-
-            b1.move(pathPoints);
-            b2.move(pathPoints);
-
-            //first check if you're at the turning point, move to next point if you are
-            //if ((xpos == pathPoints[currPath].x) && (ypos == pathPoints[currPath].y))
-              //  if (currPath < pathPoints.size() - 1) //don't walk off end of vector!
-                   // currPath++; //iterate to next point
-
-            /*//if not there yet, move our x towards x position of next junction
-            //if (xpos < pathPoints[currPath].x)
-            //    xpos += 1;
-            //if (xpos > pathPoints[currPath].x)
-            //    xpos -= 1;
-            //and move our y towards y position of next junction
-            if (ypos < pathPoints[currPath].y)
-                ypos += 1;
-            if (ypos > pathPoints[currPath].y)
-                ypos -= 1;
-            */
-        }//end pathing algorithm**************************************************************
+int main() {
+	//set up path points using the struct we made
+	//set up path points using the struct we made
+	struct point p1;
+	p1.x = 443;
+	p1.y = 793;
+	struct point p2;
+	p2.x = 443;
+	p2.y = 579;
+	struct point p3;
+	p3.x = 200;
+	p3.y = 579;
+	struct point p4;
+	p4.x = 200;
+	p4.y = 278;
+	struct point p5;
+	p5.x = 290;
+	p5.y = 278;
+	struct point p6;
+	p6.x = 290;
+	p6.y = 449;
+	struct point p7;
+	p7.x = 658;
+	p7.y = 449;
+	struct point p8;
+	p8.x = 658;
+	p8.y = 622;
+	struct point p9;
+	p9.x = 537;
+	p9.y = 622;
+	struct point p10;
+	p10.x = 537;
+	p10.y = 167;
+	struct point p11;
+	p11.x = 407;
+	p11.y = 167;
+	struct point p12;
+	p12.x = 407;
+	p12.y = 340;
+	struct point p13;
+	p13.x = 800;
+	p13.y = 340;
+	struct point p14;
+	p14.x = 900;
+	p14.y = 340;
 
 
-        //move da bloon
-        //bloon.setPosition(xpos, ypos);
+	//set up vector to hold path points, push path points into it
+	vector <point> pathPoints;
+	pathPoints.push_back(p1);
+	pathPoints.push_back(p2);
+	pathPoints.push_back(p3);
+	pathPoints.push_back(p4);
+	pathPoints.push_back(p5);
+	pathPoints.push_back(p6);
+	pathPoints.push_back(p7);
+	pathPoints.push_back(p8);
+	pathPoints.push_back(p9);
+	pathPoints.push_back(p10);
+	pathPoints.push_back(p11);
+	pathPoints.push_back(p12);
+	pathPoints.push_back(p13);
+	pathPoints.push_back(p14);
 
-        // Render section----------------------------------------------------------------
-        window.clear(sf::Color::Black);
-        b1.draw(window);
-        b2.draw(window);
-        window.display();
-    }
 
-    return 0;//buh bye
+	// create game window
+	sf::RenderWindow window(sf::VideoMode(800, 800), "loons");
+
+	/*int map[10][5] = {
+	   1,1,1,1,1,
+	   1,1,0,0,1,
+	   1,2,0,2,1,
+	   1,2,0,1,1,
+	   1,1,0,1,1,
+	   1,1,2,1,1,
+	   1,0,2,0,1,
+	   1,2,1,2,1,
+	   1,2,1,2,1,
+	   1,1,1,1,1,
+	};
+	*/
+
+	//balloon variables
+	float xpos = 443; //start off screen
+	float ypos = 820;
+
+	int currPath = 0; //begin heading towards the first point in the pathing vector
+
+	vector<bloon*> blons;
+	vector<bloon*>::iterator blonsIter;
+
+	vector<loon*> lons;
+	vector<loon*>::iterator lonsIter;
+	int tiktak = 0;
+	
+	
+
+
+	bloon red(xpos, ypos, pathPoints);
+	loon pink(xpos, ypos, pathPoints);
+
+
+	// GAME LOOP----------------------------------------------------------------------------------------
+	while (window.isOpen()) {
+		// check all the window's events that were triggered since the last iteration of the loop
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed)
+				window.close();
+			if (event.type == sf::Event::MouseButtonPressed) {
+
+			}
+		}
+		for (blonsIter = blons.begin(); blonsIter != blons.end();) {
+			if ((*blonsIter)->atPathEnd() && blons.size() > 0) {
+				(*blonsIter)->~bloon();
+				delete* blonsIter;
+				blonsIter = blons.erase(blonsIter);
+			}
+			else {
+				++blonsIter;
+			}
+		}
+		tiktak++;
+		if (tiktak % 200 == 0) {
+			blons.push_back(new bloon(xpos, ypos, pathPoints));
+		}
+		for (blonsIter = blons.begin(); blonsIter != blons.end(); blonsIter++) {
+			(*blonsIter)->move();
+		}
+
+
+
+		for (lonsIter = lons.begin(); lonsIter != lons.end();) {
+			if ((*lonsIter)->atPathEnd2() && lons.size() > 0) {
+				(*lonsIter)->~loon();
+				delete* lonsIter;
+				lonsIter = lons.erase(lonsIter);
+			}
+			else {
+				++lonsIter;
+			}
+		}
+
+		if (tiktak % 200 == 0) {
+			lons.push_back(new loon(xpos, ypos, pathPoints));
+		}
+		for (lonsIter = lons.begin(); lonsIter != lons.end(); lonsIter++) {
+			(*lonsIter)->move2();
+		}
+
+		red.move();
+		pink.move2();
+		// Render section----------------------------------------------------------------
+		window.clear(sf::Color::Black);
+		for (blonsIter = blons.begin(); blonsIter != blons.end(); blonsIter++) {
+			(*blonsIter)->draw(window);
+		}
+		red.draw(window);
+		pink.draw2(window);
+		cout << blons.size() << endl;
+		cout << lons.size() << endl;
+		window.display();
+
+
+	}
+
+	return 0;//buh bye
 }
 
-loon::loon(int x, int y) {
-    xpos = x;
-    ypos = y;
-    currPath = -0;
-
-}
-
-void loon::move(vector<point>myPath) {
-    if ((xpos == myPath[currPath].x) && (ypos == myPath[currPath].y))
-        if (currPath < myPath.size() - 1) //don't walk off end of vector!
-            currPath++; //iterate to next point
-
-    //if not there yet, move our x towards x position of next junction
-    if (xpos < myPath[currPath].x)
-        xpos += 1;
-    if (xpos > myPath[currPath].x)
-        xpos -= 1;
-    //and move our y towards y position of next junction
-    if (ypos < myPath[currPath].y)
-        ypos += 1;
-    if (ypos > myPath[currPath].y)
-        ypos -= 1;
-
+bloon::bloon(int x, int y, vector<point>Path) {
+	xpos = x;
+	ypos = y;
+	currPath = 0;
+	myPath = Path;
+	ticker = 0;
+	bloonCircle.setRadius(25);
+	bloonCircle.setFillColor(sf::Color(250, 0, 0));
+	bloonCircle.setPosition(xpos, ypos);
 }
 
 
-void loon::draw(sf::RenderWindow& window) { //passes a POINTER to the gamescreen
-    sf::CircleShape baloon(25);
-    baloon.setFillColor(sf::Color(250, 0, 0));
-    baloon.setPosition(xpos, ypos);
-    window.draw(baloon);//draw to gamescreen
+
+loon::loon(int x, int y, vector<point>Path) {
+	xpos = x;
+	ypos = y;
+	currPath = 0;
+	myPath = Path;
+	ticker = 0;
+	loonCircle.setRadius(25);
+	loonCircle.setFillColor(sf::Color(255, 33, 159));
+	loonCircle.setPosition(xpos, ypos);
+}
+
+
+
+bloon::~bloon() { }
+
+void bloon::move() {
+	//pathing algorithm*******************************************************************
+	//this works by moving the x and y coord of our baloon towards the (x,y) of the next point in the path
+	//the path is stored as a series of points in a vector called "pathPoints"
+
+	ticker++; //slow dem bloons down
+	if (ticker % 5 == 0) { //make 30 bigger to slow down baloon more
+
+		//first check if you're at the turning point, move to next point if you are
+		if ((xpos == myPath[currPath].x) && (ypos == myPath[currPath].y))
+			if (currPath < myPath.size() - 1) //don't walk off end of vector!
+				currPath++; //iterate to next point
+
+
+		//if not there yet, move our x towards x position of next junction
+		if (xpos < myPath[currPath].x)
+			xpos += 1;
+		if (xpos > myPath[currPath].x)
+			xpos -= 1;
+		//and move our y towards y position of next junction
+		if (ypos < myPath[currPath].y)
+			ypos += 1;
+		if (ypos > myPath[currPath].y)
+			ypos -= 1;
+	}//end pathing algorithm**************************************************************
+	bloonCircle.setPosition(sf::Vector2f(xpos, ypos));
+}
+void bloon::draw(sf::RenderWindow& window) {
+	window.draw(bloonCircle);
+}
+bool bloon::atPathEnd() {
+	//cout << myPath.size() << " " << currPath << " "<<endl;
+	return currPath == myPath.size() - 1;
+}
+
+
+
+loon::~loon() { }
+void loon::move2() {
+	//pathing algorithm*******************************************************************
+	//this works by moving the x and y coord of our baloon towards the (x,y) of the next point in the path
+	//the path is stored as a series of points in a vector called "pathPoints"
+
+	ticker++; //slow dem bloons down
+	if (ticker % 5 == 0) { //make 30 bigger to slow down baloon more
+
+		//first check if you're at the turning point, move to next point if you are
+		if ((xpos == myPath[currPath].x) && (ypos == myPath[currPath].y))
+			if (currPath < myPath.size() - 1) //don't walk off end of vector!
+				currPath++; //iterate to next point
+
+
+		//if not there yet, move our x towards x position of next junction
+		if (xpos < myPath[currPath].x)
+			xpos += 1;
+		if (xpos > myPath[currPath].x)
+			xpos -= 1;
+		//and move our y towards y position of next junction
+		if (ypos < myPath[currPath].y)
+			ypos += 1;
+		if (ypos > myPath[currPath].y)
+			ypos -= 1;
+	}//end pathing algorithm**************************************************************
+	loonCircle.setPosition(sf::Vector2f(xpos, ypos));
+}
+void loon::draw2(sf::RenderWindow& window) {
+	window.draw(loonCircle);
+}
+bool loon::atPathEnd2() {
+	//cout << myPath.size() << " " << currPath << " "<<endl;
+	return currPath == myPath.size() - 1;
 }
